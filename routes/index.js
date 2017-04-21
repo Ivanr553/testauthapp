@@ -3,11 +3,21 @@ const router = express.Router();
 const passport = require("passport");
 const LocalPassport = require("passport-local").Strategy
 
+// const loginPage = require("../public/login.html");
 
 const User = require("../models/userModel");
 
 router.get("/", (req, res) => {
   res.send("index");
+})
+
+router.get("/login", (req, res) => {
+  res.sendfile("./public/login.html");
+})
+
+router.get("/success", (req, res) => {
+  // res.sendfile("./public/success.html");
+  res.send({message: "logged in"})
 })
 
 router.post("/register", (req, res) => {
@@ -18,11 +28,13 @@ router.post("/register", (req, res) => {
 
   User.saveUser(newUser, (err, newUser) => {
     if (err) throw err;
-    res.send("Successfully registered user: "
-    //  + req.body.username
-      + newUser);
+    res.sendfile("./public/registered.html");
   })
 })
+
+// router.get("/registered", (req, res) => {
+//
+// })
 
 passport.use(new LocalPassport(
   function(username, password, done) {
@@ -60,8 +72,8 @@ passport.deserializeUser((id, done) => {
   })
 })
 
-router.post("/authenticate", passport.authenticate("local", {successRedirect:"/", failureRedirect:"/failure"}), function(req, res) {
-    res.send('worked');
+router.post("/authenticate", passport.authenticate("local", {successRedirect:"/success", failureRedirect:"/login"}), function(req, res) {
+    console.log("user authenticated successfully");
   });
 
 router.get("/failure", (req, res) => {
