@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
-// require("./config/passport")(app);
+require("./config/passport/passport")(passport);
 
 //express session
 app.use(session({
@@ -66,6 +66,12 @@ app.use(express.static(path.join(__dirname, "public")));
 //index
 const index = require("./routes/index");
 app.use("/", index);
+
+// //global variables
+// app.use(function(req, res, next) {
+//   res.locals.user = req.user || null
+//   next();
+// })
 
 //port
 const port = 3000;
