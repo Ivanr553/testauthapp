@@ -36,8 +36,8 @@ router.post("/register", (req, res) => {
 })
 
 //authenticate log in
-router.post("/authenticate", passport.authenticate("local", {successRedirect:"/profile", failureRedirect:"/failure"}), function(req, res) {
-    console.log("user authenticated successfully");
+router.post("/authenticate", passport.authenticate("local"), function(req, res) {
+    res.send({token: global.userID})
   });
 
 //failed to log in

@@ -67,11 +67,8 @@ app.use(express.static(path.join(__dirname, "public")));
 const index = require("./routes/index");
 app.use("/", index);
 
-// //global variables
-// app.use(function(req, res, next) {
-//   res.locals.user = req.user || null
-//   next();
-// })
+//global variables
+global.userID = null;
 
 //port
 const port = 3000;

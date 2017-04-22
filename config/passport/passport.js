@@ -7,7 +7,6 @@ module.exports = function(passport) {
 
   passport.use(new LocalPassport(
     function(username, password, done) {
-      console.log("passport used")
       User.findUserByUsername(username, (err, user) =>{
         if(err) throw err;
         if(!user) {
@@ -18,11 +17,11 @@ module.exports = function(passport) {
           if(err) throw err;
           else if(result) {
             console.log("authenticated");
-            console.log("result is: " + result)
+            global.userID = user.id;
             return done(null, user);
           }
           else if(!result) {
-            console.log("not authenticated")
+            console.log("not authenticated");
             return done(null, false, {message:"incorrect password"});
           }
         })
