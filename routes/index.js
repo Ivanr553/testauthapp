@@ -16,11 +16,6 @@ router.get("/login", (req, res) => {
   res.sendfile("./public/login.html");
 })
 
-//successful login
-router.get("/success", (req, res) => {
-  // res.sendfile("./public/success.html");
-  res.send({message: "logged in"})
-})
 
 //register route
 router.post("/register", (req, res) => {
@@ -37,13 +32,10 @@ router.post("/register", (req, res) => {
 
 //authenticate log in
 router.post("/authenticate", passport.authenticate("local"), function(req, res) {
-    res.send({token: global.userID})
+    res.send({
+      "token": global.token,
+       "user": global.user})
   });
-
-//failed to log in
-router.get("/failure", (req, res) => {
-  res.send({message:"failed to authenticate"});
-})
 
 //user account page
 router.get("/profile", (req, res) => {

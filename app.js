@@ -63,12 +63,17 @@ app.use(expressValidator({
 //static files
 app.use(express.static(path.join(__dirname, "public")));
 
+//raincheck
+const raincheckRoute = require("./routes/raincheck");
+app.use("/rainchecks", raincheckRoute);
+
 //index
 const index = require("./routes/index");
 app.use("/", index);
 
 //global variables
-global.userID = null;
+global.token = null;
+global.user = null;
 
 //port
 const port = 3000;
