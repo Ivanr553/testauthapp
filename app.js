@@ -63,6 +63,10 @@ app.use(expressValidator({
 //static files
 app.use(express.static(path.join(__dirname, "public")));
 
+//raincheck
+const raincheckRoute = require("./routes/raincheck");
+app.use("/raincheck", raincheckRoute);
+
 //index
 const index = require("./routes/index");
 app.use("/", index);
