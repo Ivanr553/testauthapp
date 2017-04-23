@@ -30,7 +30,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
 app.use(passport.initialize());
 app.use(passport.session());
 require("./config/passport/passport")(passport);
@@ -66,7 +65,6 @@ app.use(express.static(path.join(__dirname, "public")));
 //raincheck
 const raincheckRoute = require("./routes/raincheck");
 app.use("/raincheck", raincheckRoute);
-
 
 //index
 const index = require("./routes/index");

@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
 
 router.post("/add", (req, res) => {
   let newRaincheck = new Raincheck({
+    user: req.body.user,
     name: req.body.name,
     phone: req.body.phone,
     skus: req.body.skus,
@@ -30,6 +31,14 @@ router.post("/add", (req, res) => {
     res.send({message: newRaincheck.name + "'s order has been added"});
   })
 });
+
+router.delete("/remove", (req, res) => {
+
+  Raincheck.find({id: req.body.id}).remove((err) => {
+    if(err) throw err;
+    res.send("raincheck deleted")
+  })
+})
 
 
 module.exports = router;
