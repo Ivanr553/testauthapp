@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
+<<<<<<< HEAD
 const Raincheck = require("../models/raincheckModel");
 
 router.get("/", (req, res) => {
@@ -32,6 +33,11 @@ router.post("/add", (req, res) => {
     res.send(newRaincheck.name + "'s order has been added");
   })
 
+=======
+
+router.get("/", (req, res) => {
+  res.send({message: "Rainchecks"});
+>>>>>>> c570f4ab49d183e477ead775c5a7aa0de6788d43
 })
 
 module.exports = router;
