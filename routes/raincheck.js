@@ -18,12 +18,12 @@ router.get("/", (req, res) => {
 
 router.post("/add", (req, res) => {
   let newRaincheck = new Raincheck({
-    user: req.body.user,
+    id: req.body.id,
     name: req.body.name,
     phone: req.body.phone,
     skus: req.body.skus,
     items: req.body.items,
-    notes: req.body.notes
+    comments: req.body.comments
   })
 
   newRaincheck.save(newRaincheck, (err) => {
@@ -32,13 +32,25 @@ router.post("/add", (req, res) => {
   })
 });
 
-router.delete("/remove", (req, res) => {
+router.post("/delete", (req, res) => {
+  console.log("request made")
+  console.log(req.body.id)
 
-  Raincheck.find({id: req.body.id}).remove((err) => {
+  Raincheck.find({_id: req.body.id}, (err, found) => {
     if(err) throw err;
-    res.send("raincheck deleted")
+  }).remove((err) => {
+    if(err) throw err;
+    console.log("deleted");
+    res.send("deleted");
   })
+  //
+  // Raincheck.remove({id: ObjectId(req.body.id)}, (err) => {
+  //   if(err) throw err;
+  //   console.log("removed")
+  //   res.send("removed")
+  // })
 })
+
 
 
 module.exports = router;

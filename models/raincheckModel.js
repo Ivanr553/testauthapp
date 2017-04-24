@@ -3,12 +3,13 @@ const express = require("express");
 const router = express.Router();
 
 let raincheckSchema = mongoose.Schema({
-  user: String,
+  id: String,
+  date: String,
   name: String,
-  skus: [Number],
-  items: [String],
   phone: Number,
-  notes: String
+  skus: [String],
+  items: [String],
+  comments: String
 },
 {
   collection: "rainchecks"
