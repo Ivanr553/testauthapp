@@ -6,10 +6,10 @@ let raincheckSchema = mongoose.Schema({
   id: String,
   date: String,
   name: String,
-  phone: Number,
-  skus: [String],
-  items: [String],
-  comments: String
+  phone: String,
+  merchandise: [],
+  comments: String,
+  time : String
 },
 {
   collection: "rainchecks"

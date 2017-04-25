@@ -11,31 +11,52 @@ router.get("/", (req, res) => {
       return res.send({message: "no rainchecks found"})
     }
     else {
-      return res.send({message: rainchecks});
+      return res.send(rainchecks);
     }
   })
 });
 
 router.post("/add", (req, res) => {
+  //formatting phone string
+  let editedPhone = req.body.phone;
+  editedPhone =
+       "("
+     + editedPhone.substring(0, 3)
+     + ") "
+     + editedPhone.substring(3, 6)
+     + "-"
+     + editedPhone.substring(6, 10);
+
+     //create time for the raincheck
+     let today = new Date();
+     let dd = today.getDate();
+     let mm = today.getMonth()+1; //January is 0!
+     let yyyy = today.getFullYear();
+
+     if(dd<10) {
+         dd='0'+dd
+     }
+     if(mm<10) {
+         mm='0'+mm
+     }
+     today = mm+'/'+dd+'/'+yyyy;
+
   let newRaincheck = new Raincheck({
     id: req.body.id,
     name: req.body.name,
-    phone: req.body.phone,
-    skus: req.body.skus,
-    items: req.body.items,
-    comments: req.body.comments
+    phone: editedPhone,
+    merchandise: req.body.merchandise,
+    comments: req.body.comments,
+    time: today
   })
 
   newRaincheck.save(newRaincheck, (err) => {
     if(err) throw err;
-    res.send({message: newRaincheck.name + "'s order has been added"});
+    res.send({message: newRaincheck.name + "'s order has been added" + newRaincheck});
   })
 });
 
 router.post("/delete", (req, res) => {
-  console.log("request made")
-  console.log(req.body.id)
-
   Raincheck.find({_id: req.body.id}, (err, found) => {
     if(err) throw err;
   }).remove((err) => {
@@ -43,12 +64,6 @@ router.post("/delete", (req, res) => {
     console.log("deleted");
     res.send("deleted");
   })
-  //
-  // Raincheck.remove({id: ObjectId(req.body.id)}, (err) => {
-  //   if(err) throw err;
-  //   console.log("removed")
-  //   res.send("removed")
-  // })
 })
 
 
